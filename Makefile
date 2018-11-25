@@ -1,13 +1,11 @@
 TEST_FILES = socIN.bmp socOUT.bmp
 MESSAGE = "i love SoC"
 
-all: build test clean
-
 build:
-	gcc encoder.c -o encoder
+	gcc encoder.c -o encoder && echo "Done build" || exit 1;
 
 clean: 
-	rm -rf *.o encoder
+	rm -rf *.o encoder socOUT.bmp && echo "Done cleaning project dir" || exit 1;
 
 test: encoder
-	./encoder ${TEST_FILES} ${MESSAGE}
+	./encoder ${TEST_FILES} ${MESSAGE} || exit 1;
