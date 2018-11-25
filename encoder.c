@@ -40,6 +40,9 @@ int main(int argc, char *argv[] )
   }
   msg[currentMessagePosition] = '\0';
   
-  printf(msg);
+  printf("%s\n", msg );
+  
+  fclose(imgIN);
+  fclose(imgOUT);
   return 0;
 }
