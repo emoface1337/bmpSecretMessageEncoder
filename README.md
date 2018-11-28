@@ -14,7 +14,7 @@ make build
 ### Test
 4 Third run test with secret message "I love SoC" and socIN.bmp + socOUT.bmp files (check Makefile)
 ```
-> cat Makefile
+cat Makefile
 build:
 	gcc encoder.c -o encoder && echo "*** Done build ***" || exit 1;
 
