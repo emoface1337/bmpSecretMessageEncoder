@@ -27,14 +27,41 @@ int main(int argc, char *argv[] )
     printf( "Could not open the IN bmp file.\n" );
     return 1;
   }
+  fseek(imgIN, 0L, SEEK_SET);
+  char bfType[3];
+  bfType[2] = '\0';
+  if (fread(bfType, sizeof(char), 2, imgIN) && (strcmp("BM", bfType) == 0)) {
+  	printf("---\nENCODER: file actually is a bmp file\n---\n");
+  }
+  else {
+  	printf("---\nENCODER: file actually is not a bmp file\n---\n");
+  	return 1;
+  }
+  
+  unsigned int biBitCount;
+  unsigned int biCompression;
+  fseek(imgIN, 28L, SEEK_SET); 
+  if(fread(&biBitCount, sizeof(char), 2, imgIN)) {
+  	fseek(imgIN, 30L, SEEK_SET);
+  	if (fread(&biCompression, sizeof(char), 4, imgIN) && (biCompression == 0) && biBitCount != 0) {
+  		printf("---\nENCODER: file actually is not compressed\n---\n");
+  		printf("---\nENCODER: biBitCount and biCompression is OK\n---\n");
+  		fseek(imgIN, 0L, SEEK_SET);
+  	}
+  	else{
+  		printf("---\nENCODER: biBitCount and biCompression is NOT OK\n---\n");
+  		return 1;
+  	}
+  }
+  
   // open and check imgOUT
   imgOUT = fopen( argv[2], "wb" );
   if( imgOUT == NULL ){
     printf( "Could not open the OUT bmp file.\n" );
     return 1;
-  }  
+  }
 
-	// read message in args
+  // read message in args
   for( i=3; i<argc; i++ ){
     strcpy( msg+currentMessagePosition, argv[i] );
     currentMessagePosition += strlen(argv[i]);
