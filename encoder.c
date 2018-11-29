@@ -1,35 +1,36 @@
 #include <stdio.h>
 #include <string.h>
 
+const int bmpHeaderSize = 54;
+const int maxMessageSize = 1000;
+int i;
+int readCode;
+int msgIdx = 0;
+int imgIdx = 0;
+int bitIdx = 0;
+int currentMessagePosition=0;
+char c;
+FILE *imgIN = NULL;
+FILE *imgOUT = NULL;
+
 int main(int argc, char *argv[] )
 {
-  const int bmpHeaderSize = 54;
-  const int maxMessageSize = 1000;
-  int i;
-  int readCode;
-  int msgIdx = 0;
-  int imgIdx = 0;
-  int bitIdx = 0;
-  int currentMessagePosition=0;
-  char c;
   char msg[maxMessageSize];
-  FILE *imgIN = NULL;
-  FILE *imgOUT = NULL;
-  
   if( argc < 4 ){
     printf( "Usage: %s bmp_in bmp_out secret message.\n", argv[0] );
     return 1;
   }
+
   // open and check imgIN
   imgIN = fopen( argv[1], "rb" );
   if( imgIN == NULL ){
-    printf( "Could not open the in bmp file.\n" );
+    printf( "Could not open the IN bmp file.\n" );
     return 1;
   }
   // open and check imgOUT
   imgOUT = fopen( argv[2], "wb" );
   if( imgOUT == NULL ){
-    printf( "Could not open the out bmp file.\n" );
+    printf( "Could not open the OUT bmp file.\n" );
     return 1;
   }  
 
@@ -70,10 +71,10 @@ int main(int argc, char *argv[] )
     imgIdx++;
   }
 
-  printf( "*-* Secret message with %d bytes is storing in socOUT.bmp file *-*\n*-* So you have to write decoder to check this =D *-*\n", imgIdx );
-  printf("%s\n", msg );
-  
+  printf( "---\nENCODER: Secret message with %d bytes is storing in socOUT.bmp file\n---\n", imgIdx );
+
   fclose(imgIN);
   fclose(imgOUT);
+  
   return 0;
 }
