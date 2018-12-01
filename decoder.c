@@ -26,25 +26,25 @@ int main(int argc, char *argv[] )
     return 1;
   }
 
-	// set msg to 0
+  // set msg to 0
   for( i=0; i < maxMessageSize; i++ )
     msg[i] = 0;
 
   // while loop for extracting lowest bits
   while( ( c = fgetc( imgIN )) != EOF ){
  
-	 // first 54 bits skip cuz they are header
+   // first 54 bits skip cuz they are header
    if( imgIdx >= bmpHeaderSize ){
     
      // check lowest bit 
-		 if( ( c & 1 )  > 0 )
+     if( ( c & 1 )  > 0 )
         // if 1 - next need to write into msg
         msg[msgIdx] |= 1 << bitIdx;
 
       // inc bit index
       bitIdx++;
 
-			// move to next byte
+      // move to next byte
       if( bitIdx >= 8 ){
        if( msg[msgIdx] == '\0' )
           break; // if msg in index == null term
