@@ -52,7 +52,14 @@ int main(int argc, char * argv[]) {
         }
         imgIdx++;
     }
-    printf("--- DECODER: secret message: %s ---\n", msg);
-    fclose(imgIN);
-    return 0;
+    if(strlen(msg) == 0){
+    	printf("--- DECODER: There is no secret message %s ---\n", msg);
+    	fclose(imgIN);
+    	return 0;
+    }
+    else{
+    	printf("--- DECODER: secret message: %s ---\n", msg);
+    	fclose(imgIN);
+    	return 0;
+    }
 }
