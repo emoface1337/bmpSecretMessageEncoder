@@ -76,7 +76,7 @@ int main(int argc, char * argv[]) {
     }
     msg[currentMessagePosition] = '\0'; //null term
 
-    if (sizeof(msg[currentMessagePosition] / sizeof(char)) > 1000) {
+    if (sizeof(msg[currentMessagePosition] / sizeof(char)) > maxMessageSize) {
         printf("--- ENCODER: size of message is more than 1000 symbols ---\n");
         return 1;
     }
